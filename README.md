@@ -3,7 +3,7 @@ Generated events and OnEvent() methods.
 
 ## Install
 ```
-Install-Package EventGenerator // Generator
+Install-Package EventGenerator.Generator // Generator
 Install-Package EventGenerator.Core // Attributes
 ```
 

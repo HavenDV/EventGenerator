@@ -26,7 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\libs\EventGenerator.Core\EventGenerator.Core.csproj" />
-    <ProjectReference Include="..\..\libs\EventGenerator\EventGenerator.csproj" />
+    <ProjectReference Include="..\..\libs\EventGenerator\EventGenerator.Generator.csproj" />
   </ItemGroup>
 
 </Project>
