@@ -15,20 +15,40 @@ namespace {@class.Namespace}
     public{@class.Modifiers} partial class {@class.Name}
     {{
 {GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
-        public event {GenerateEventHandlerType(@class)}? {@event.Name};
+        public event {GenerateEventHandlerType(@class, @event)}? {@event.Name};
 
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
-        protected {GenerateEventArgsType(@class)} On{@event.Name}()
+        protected {GenerateEventArgsType(@class, @event)} On{@event.Name}({GenerateOnEventParameters(@class, @event)})
         {{
-            var args = new {GenerateEventArgsType(@class)}();
+            {GenerateArgs(@class, @event)}
             {@event.Name}?.Invoke(this, args);
 
             return args;
         }}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
+    }
+
+    public static string GenerateArgs(ClassData @class, EventData @event)
+    {
+        if (@event.Type != null)
+        {
+            return string.Empty;
+        }
+
+        return $"var args = new {GenerateEventArgsType(@class, @event)}();";
+    }
+
+    public static string GenerateOnEventParameters(ClassData @class, EventData @event)
+    {
+        if (@event.Type == null)
+        {
+            return string.Empty;
+        }
+
+        return $"{GenerateEventArgsType(@class, @event)} args";
     }
 
     public static string GenerateType(string fullTypeName, bool isSpecialType)
@@ -44,13 +64,23 @@ namespace {@class.Namespace}
         };
     }
 
-    public static string GenerateEventArgsType(ClassData @class)
+    public static string GenerateEventArgsType(ClassData @class, EventData @event)
     {
+        if (@event.Type != null)
+        {
+            return GenerateType(@event.Type, false);
+        }
+
         return GenerateType("EventArgs");
     }
 
-    public static string GenerateEventHandlerType(ClassData @class)
+    public static string GenerateEventHandlerType(ClassData @class, EventData @event)
     {
+        if (@event.Type != null)
+        {
+            return $"{GenerateType("EventHandler")}<{GenerateType(@event.Type, false)}>";
+        }
+
         return GenerateType("EventHandler");
     }
 
