@@ -1,0 +1,9 @@
+﻿<Project>
+
+  <ItemGroup>
+    <CompilerVisibleProperty Include="DependencyPropertyGenerator_DebuggerBreak"/>
+    <CompilerVisibleProperty Include="BuildingProject" />
+    <CompilerVisibleProperty Include="DesignTimeBuild" />
+  </ItemGroup>
+  
+</Project>

@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NoWarn>$(NoWarn);CA1014;CA1031</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Label="NuGet">
+    <NoWarn>$(NoWarn);NU5128;CA1724</NoWarn>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <Description>C# Source Generator library to generate events and OnEvent() methods.</Description>
+    <PackageTags>event;events;generator;source generator</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(AssemblyName).props" Pack="true" PackagePath="build" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.0" PrivateAssets="all" />
+    <PackageReference Include="H.Generators.Extensions" Version="1.7.5" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>
