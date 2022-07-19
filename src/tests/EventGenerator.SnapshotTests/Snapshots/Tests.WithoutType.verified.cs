@@ -12,7 +12,7 @@ namespace H.Generators.IntegrationTests
         /// <summary>
         /// A helper method to raise the Changed event.
         /// </summary>
-        protected global::System.EventArgs OnChanged()
+        protected virtual global::System.EventArgs OnChanged()
         {
             var args = new global::System.EventArgs();
             Changed?.Invoke(this, args);

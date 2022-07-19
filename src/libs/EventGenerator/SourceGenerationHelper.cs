@@ -48,7 +48,7 @@ namespace {@class.Namespace}
             return "private";
         }
 
-        return "protected";
+        return "protected virtual";
     }
 
     public static string GenerateOnEventParameters(ClassData @class, EventData @event)
