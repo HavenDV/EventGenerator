@@ -5,4 +5,5 @@ public readonly record struct ClassData(
     string Name,
     string FullName,
     string Modifiers,
+    bool IsSealed,
     IReadOnlyCollection<EventData> Events);

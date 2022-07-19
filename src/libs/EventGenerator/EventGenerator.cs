@@ -112,6 +112,7 @@ public class EventGenerator : IIncrementalGenerator
             var @namespace = fullClassName.Substring(0, fullClassName.LastIndexOf('.'));
             var className = fullClassName.Substring(fullClassName.LastIndexOf('.') + 1);
             var classModifiers = classSymbol.IsStatic ? " static" : string.Empty;
+            var isSealed = classSymbol.IsSealed;
 
             var events = new List<EventData>();
             var attributes = @classSymbol.GetAttributes()
@@ -159,6 +160,7 @@ public class EventGenerator : IIncrementalGenerator
                 Name: className,
                 FullName: fullClassName,
                 Modifiers: classModifiers,
+                IsSealed: isSealed,
                 Events: events));
         }
 

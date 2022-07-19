@@ -20,7 +20,7 @@ namespace {@class.Namespace}
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
-        protected {GenerateEventArgsType(@class, @event)} On{@event.Name}({GenerateOnEventParameters(@class, @event)})
+        {GenerateOnEventModifier(@class)} {GenerateEventArgsType(@class, @event)} On{@event.Name}({GenerateOnEventParameters(@class, @event)})
         {{
             {GenerateArgs(@class, @event)}
             {@event.Name}?.Invoke(this, args);
@@ -39,6 +39,16 @@ namespace {@class.Namespace}
         }
 
         return $"var args = new {GenerateEventArgsType(@class, @event)}();";
+    }
+
+    public static string GenerateOnEventModifier(ClassData @class)
+    {
+        if (@class.IsSealed)
+        {
+            return "private";
+        }
+
+        return "protected";
     }
 
     public static string GenerateOnEventParameters(ClassData @class, EventData @event)
