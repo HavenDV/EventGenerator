@@ -22,12 +22,10 @@
 
   <ItemGroup>
     <None Include="$(AssemblyName).props" Pack="true" PackagePath="build" />
-    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)\EventGenerator.Core.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)\EventGenerator.Core.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-    <None Include="$(OutputPath)\EventGenerator.Core.xml" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-    <None Include="$(OutputPath)\EventGenerator.Core.dll" Pack="true" PackagePath="lib/net451" Visible="false" />
-    <None Include="$(OutputPath)\EventGenerator.Core.xml" Pack="true" PackagePath="lib/net451" Visible="false" />
+    <None Include="$(OutputPath)\$(AssemblyName).*" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(OutputPath)\EventGenerator.Attributes.*" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(OutputPath)\EventGenerator.Attributes.*" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
+    <None Include="$(OutputPath)\EventGenerator.Attributes.*" Pack="true" PackagePath="lib/net451" Visible="false" />
   </ItemGroup>
 
 </Project>
