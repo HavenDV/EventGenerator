@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\libs\EventGenerator.Core\EventGenerator.Core.csproj" />
+    <ProjectReference Include="..\..\libs\EventGenerator.Attributes\EventGenerator.Attributes.csproj" />
     <ProjectReference Include="..\..\libs\EventGenerator\EventGenerator.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 

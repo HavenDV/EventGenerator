@@ -4,6 +4,7 @@ using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using EventAttribute = EventGenerator.EventAttribute;
 
 namespace H.Generators;
 
@@ -15,7 +16,7 @@ public class EventGenerator : IIncrementalGenerator
     public const string Name = nameof(EventGenerator);
     public const string Id = "EG";
 
-    private const string EventAttribute = "EventGenerator.EventAttribute";
+    private static string EventAttributeFullName => typeof(EventAttribute).FullName;
 
     #endregion
 
@@ -133,23 +134,21 @@ public class EventGenerator : IIncrementalGenerator
                 }
                 var attribute = attributes[name];
                 var attributeClass = attribute.AttributeClass?.ToDisplayString() ?? string.Empty;
-                if (attributeClass.StartsWith(EventAttribute))
+                if (attributeClass.StartsWith(EventAttributeFullName))
                 {
                     var type =
                         GetGenericTypeArgumentFromAttributeData(attribute, 0)?.ToDisplayString() ??
-                        GetPropertyFromAttributeData(attribute, nameof(EventData.Type))?.Value?.ToString();
+                        GetPropertyFromAttributeData(attribute, nameof(EventAttribute.Type))?.Value?.ToString();
 
-                    var description = GetPropertyFromAttributeData(attribute, nameof(EventData.Description))?.Value?.ToString();
+                    var description = GetPropertyFromAttributeData(attribute, nameof(EventAttribute.Description))?.Value?.ToString();
 
-                    var xmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(EventData.XmlDocumentation))?.Value?.ToString();
-                    var eventXmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(EventData.EventXmlDocumentation))?.Value?.ToString();
+                    var xmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(EventAttribute.XmlDocumentation))?.Value?.ToString();
 
                     var value = new EventData(
                         Name: name,
                         Type: type,
                         Description: description,
-                        XmlDocumentation: xmlDocumentation,
-                        EventXmlDocumentation: eventXmlDocumentation);
+                        XmlDocumentation: xmlDocumentation);
                     
                     events.Add(value);
                 }
@@ -170,7 +169,7 @@ public class EventGenerator : IIncrementalGenerator
     private static bool IsGeneratorAttribute(string fullTypeName)
     {
         return
-            fullTypeName.StartsWith(EventAttribute);
+            fullTypeName.StartsWith(EventAttributeFullName);
     }
 
     private static bool IsGeneratorAttribute(AttributeSyntax attributeSyntax, SemanticModel semanticModel)

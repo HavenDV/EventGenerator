@@ -14,7 +14,7 @@ namespace {@class.Namespace}
 {{
     public{@class.Modifiers} partial class {@class.Name}
     {{
-{GenerateXmlDocumentationFrom(@event.EventXmlDocumentation, @event)}
+{GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
         public event {GenerateEventHandlerType(@class, @event)}? {@event.Name};
 
         /// <summary>

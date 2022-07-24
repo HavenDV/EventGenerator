@@ -3,8 +3,7 @@ Generated events and OnEvent() methods.
 
 ## Install
 ```
-Install-Package EventGenerator.Generator // Generator
-Install-Package EventGenerator.Core // Attributes
+Install-Package EventGenerator.Generator
 ```
 
 ## Usage
@@ -49,11 +48,6 @@ namespace H.Generators.IntegrationTests
     }
 }
 ```
-
-### XML documentation
-If for some reason you need to save xml documentation for your properties, 
-there is an option to specify xml text for both DependencyProperty and getter/setter 
-via XmlDocumentation/PropertyXmlDocumentation attribute properties.
 
 ## Notes
 To use generic attributes, you need to set up `LangVersion` in your .csproj:
