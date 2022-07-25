@@ -6,7 +6,7 @@ namespace EventGenerator;
 /// Generates an event.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-[Conditional("EVENTGENERATORS_ATTRIBUTES")]
+[Conditional("EVENTGENERATOR_ATTRIBUTES")]
 public sealed class EventAttribute : Attribute
 {
     /// <summary>
@@ -52,7 +52,7 @@ public sealed class EventAttribute : Attribute
 /// </summary>
 /// <typeparam name="T">Type of event handler.</typeparam>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-[Conditional("EVENTGENERATORS_ATTRIBUTES")]
+[Conditional("EVENTGENERATOR_ATTRIBUTES")]
 public sealed class EventAttribute<T> : Attribute
 {
     /// <summary>
