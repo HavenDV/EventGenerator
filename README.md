@@ -5,6 +5,11 @@ Generated events and OnEvent() methods.
 ```
 Install-Package EventGenerator.Generator
 ```
+```xml
+<!-- compile asset is required for attributes. -->
+<!-- ExcludeAssets="runtime" excludes EventGenerator.Attributes.dll from your output. -->
+<PackageReference Include="EventGenerator.Generator" Version="0.3.3" PrivateAssets="all" ExcludeAssets="runtime" />
+```
 
 ## Usage
 ```cs
