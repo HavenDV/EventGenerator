@@ -24,10 +24,10 @@
     <None Include="$(AssemblyName).props" Pack="true" PackagePath="build" />
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\EventGenerator.Attributes.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)\EventGenerator.Attributes.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-    <None Include="$(OutputPath)\EventGenerator.Attributes.xml" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-    <None Include="$(OutputPath)\EventGenerator.Attributes.dll" Pack="true" PackagePath="lib/net451" Visible="false" />
-    <None Include="$(OutputPath)\EventGenerator.Attributes.xml" Pack="true" PackagePath="lib/net451" Visible="false" />
+    <None Include="../EventGenerator.Attributes/bin/$(Configuration)/netstandard2.0/EventGenerator.Attributes.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
+    <None Include="../EventGenerator.Attributes/bin/$(Configuration)/netstandard2.0/EventGenerator.Attributes.xml" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
+    <None Include="../EventGenerator.Attributes/bin/$(Configuration)/net4.5.1/EventGenerator.Attributes.dll" Pack="true" PackagePath="lib/net451" Visible="false" />
+    <None Include="../EventGenerator.Attributes/bin/$(Configuration)/net4.5.1/EventGenerator.Attributes.xml" Pack="true" PackagePath="lib/net451" Visible="false" />
   </ItemGroup>
 
 </Project>
