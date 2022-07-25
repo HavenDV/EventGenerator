@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace EventGenerator;
+﻿namespace EventGenerator;
 
 /// <summary>
 /// Generates an event.
