@@ -1,9 +1,18 @@
 ﻿<Project>
 
   <ItemGroup>
-    <CompilerVisibleProperty Include="DependencyPropertyGenerator_DebuggerBreak"/>
+    <CompilerVisibleProperty Include="EventGenerator_DebuggerBreak"/>
     <CompilerVisibleProperty Include="BuildingProject" />
     <CompilerVisibleProperty Include="DesignTimeBuild" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <EventGenerator_EmbedAttributes>false</EventGenerator_EmbedAttributes>
+    <EventGenerator_EmbeddedAttributesVisible>true</EventGenerator_EmbeddedAttributesVisible>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(EventGenerator_EmbedAttributes)">
+    <Compile Include="$(MSBuildThisFileDirectory)*.cs" Visible="$(EventGenerator_EmbeddedAttributesVisible)" />
   </ItemGroup>
   
 </Project>

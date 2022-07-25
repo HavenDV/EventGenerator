@@ -3,19 +3,19 @@
 /// <summary>
 /// Generates an event.
 /// </summary>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-[Conditional("EVENTGENERATOR_ATTRIBUTES")]
-public sealed class EventAttribute : Attribute
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
+public sealed class EventAttribute : global::System.Attribute
 {
     /// <summary>
     /// Name.
     /// </summary>
-	public string Name { get; }
+    public string Name { get; }
 
     /// <summary>
     /// Type of event handler.
     /// </summary>
-    public Type? Type { get; }
+    public global::System.Type? Type { get; }
 
     /// <summary>
     /// Description of this dependency property. <br/>
@@ -35,12 +35,12 @@ public sealed class EventAttribute : Attribute
     /// </summary>
     /// <param name="name"></param>
     /// <param name="type"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
     public EventAttribute(
         string name,
-        Type? type = null)
+        global::System.Type? type = null)
     {
-        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Name = name ?? throw new global::System.ArgumentNullException(nameof(name));
         Type = type;
     }
 }
@@ -49,9 +49,9 @@ public sealed class EventAttribute : Attribute
 /// Generates an event.
 /// </summary>
 /// <typeparam name="T">Type of event handler.</typeparam>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-[Conditional("EVENTGENERATOR_ATTRIBUTES")]
-public sealed class EventAttribute<T> : Attribute
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
+public sealed class EventAttribute<T> : global::System.Attribute
 {
     /// <summary>
     /// Name.
@@ -61,7 +61,7 @@ public sealed class EventAttribute<T> : Attribute
     /// <summary>
     /// Type of event handler.
     /// </summary>
-    public Type Type { get; }
+    public global::System.Type Type { get; }
 
     /// <summary>
     /// Description of this dependency property. <br/>
@@ -80,11 +80,11 @@ public sealed class EventAttribute<T> : Attribute
     /// 
     /// </summary>
     /// <param name="name"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
     public EventAttribute(
         string name)
     {
-        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Name = name ?? throw new global::System.ArgumentNullException(nameof(name));
         Type = typeof(T);
     }
 }

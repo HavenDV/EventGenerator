@@ -3,11 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net4.5.1</TargetFrameworks>
     <IsPackable>false</IsPackable>
+    <ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
-
-  <ItemGroup Label="Usings">
-    <Using Remove="System.Net.Http" />
-    <Using Include="System.Diagnostics" />
-  </ItemGroup>
 
 </Project>
