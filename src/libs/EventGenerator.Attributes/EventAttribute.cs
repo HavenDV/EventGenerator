@@ -1,4 +1,6 @@
-﻿namespace EventGenerator;
+﻿#nullable enable
+
+namespace EventGenerator;
 
 /// <summary>
 /// Generates an event.
