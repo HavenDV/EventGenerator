@@ -1,5 +1,4 @@
 ﻿using H.Generators.Extensions;
-using Microsoft.CodeAnalysis;
 
 namespace H.Generators;
 
@@ -12,7 +11,7 @@ internal class SourceGenerationHelper
 
 namespace {@class.Namespace}
 {{
-    public{@class.Modifiers} partial class {@class.Name}
+    {@class.Modifiers} partial class {@class.Name}
     {{
 {GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
         public event {GenerateEventHandlerType(@class, @event)}? {@event.Name};

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using EventAttribute = EventGenerator.EventAttribute;
@@ -112,7 +113,9 @@ public class EventGenerator : IIncrementalGenerator
             var fullClassName = classSymbol.ToString();
             var @namespace = fullClassName.Substring(0, fullClassName.LastIndexOf('.'));
             var className = fullClassName.Substring(fullClassName.LastIndexOf('.') + 1);
-            var classModifiers = classSymbol.IsStatic ? " static" : string.Empty;
+            var classModifiers = SyntaxFacts.GetText(classSymbol.DeclaredAccessibility);
+            classModifiers += classSymbol.IsStatic ? " static" : string.Empty;
+            
             var isSealed = classSymbol.IsSealed;
 
             var events = new List<EventData>();
@@ -134,7 +137,7 @@ public class EventGenerator : IIncrementalGenerator
                 }
                 var attribute = attributes[name];
                 var attributeClass = attribute.AttributeClass?.ToDisplayString() ?? string.Empty;
-                if (attributeClass.StartsWith(EventAttributeFullName))
+                if (attributeClass.StartsWith(EventAttributeFullName, StringComparison.InvariantCulture))
                 {
                     var type =
                         GetGenericTypeArgumentFromAttributeData(attribute, 0)?.ToDisplayString() ??
@@ -169,7 +172,7 @@ public class EventGenerator : IIncrementalGenerator
     private static bool IsGeneratorAttribute(string fullTypeName)
     {
         return
-            fullTypeName.StartsWith(EventAttributeFullName);
+            fullTypeName.StartsWith(EventAttributeFullName, StringComparison.InvariantCulture);
     }
 
     private static bool IsGeneratorAttribute(AttributeSyntax attributeSyntax, SemanticModel semanticModel)
