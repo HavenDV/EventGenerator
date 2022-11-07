@@ -1,4 +1,8 @@
-﻿#nullable enable
+﻿// ReSharper disable RedundantNameQualifier
+// ReSharper disable UnusedType.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable MemberCanBePrivate.Global
+#nullable enable
 
 namespace EventGenerator;
 

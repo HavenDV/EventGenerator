@@ -14,8 +14,8 @@ public class EventGenerator : IIncrementalGenerator
 {
     #region Constants
 
-    public const string Name = nameof(EventGenerator);
-    public const string Id = "EG";
+    private const string Name = nameof(EventGenerator);
+    private const string Id = "EG";
 
     private static string EventAttributeFullName => typeof(EventAttribute).FullName;
 
@@ -105,7 +105,7 @@ public class EventGenerator : IIncrementalGenerator
             
             var semanticModel = compilation.GetSemanticModel(@class.SyntaxTree);
             if (semanticModel.GetDeclaredSymbol(
-                @class, cancellationToken) is not INamedTypeSymbol classSymbol)
+                @class, cancellationToken) is not { } classSymbol)
             {
                 continue;
             }
@@ -128,7 +128,7 @@ public class EventGenerator : IIncrementalGenerator
                 .SelectMany(static list => list.Attributes)
                 .Where(attributeSyntax => IsGeneratorAttribute(attributeSyntax, compilation.GetSemanticModel(attributeSyntax.SyntaxTree))))
             {
-                var name = attributeSyntax.ArgumentList?.Arguments[0].ToFullString()?.Trim('"') ?? string.Empty;
+                var name = attributeSyntax.ArgumentList?.Arguments[0].ToFullString().Trim('"') ?? string.Empty;
                 if (name.Contains("nameof("))
                 {
                     name = name
@@ -160,7 +160,6 @@ public class EventGenerator : IIncrementalGenerator
             values.Add(new ClassData(
                 Namespace: @namespace,
                 Name: className,
-                FullName: fullClassName,
                 Modifiers: classModifiers,
                 IsSealed: isSealed,
                 Events: events));
@@ -198,22 +197,12 @@ public class EventGenerator : IIncrementalGenerator
     private static string? GetFullClassName(Compilation compilation, ClassDeclarationSyntax classDeclarationSyntax)
     {
         var semanticModel = compilation.GetSemanticModel(classDeclarationSyntax.SyntaxTree);
-        if (semanticModel.GetDeclaredSymbol(classDeclarationSyntax) is not INamedTypeSymbol classSymbol)
+        if (semanticModel.GetDeclaredSymbol(classDeclarationSyntax) is not { } classSymbol)
         {
             return null;
         }
 
         return classSymbol.ToString();
-    }
-
-    private static bool? IsSpecialType(ITypeSymbol? symbol)
-    {
-        if (symbol == null)
-        {
-            return null;
-        }
-
-        return symbol.SpecialType != SpecialType.None;
     }
 
     private static ITypeSymbol? GetGenericTypeArgumentFromAttributeData(AttributeData data, int position)
@@ -226,20 +215,6 @@ public class EventGenerator : IIncrementalGenerator
         return data.NamedArguments
             .FirstOrDefault(pair => pair.Key == name)
             .Value;
-    }
-
-    private static string? GetPropertyFromAttributeSyntax(AttributeSyntax syntax, string name)
-    {
-        return syntax.ArgumentList?.Arguments
-            .FirstOrDefault(syntax =>
-            {
-                var nameEquals = syntax.NameEquals?.ToFullString()?
-                    .Trim('=', ' ', '\t', '\r', '\n');
-                
-                return nameEquals == name;
-            })?
-            .Expression
-            .ToFullString();
     }
 
     #endregion

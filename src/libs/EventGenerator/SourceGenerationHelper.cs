@@ -2,7 +2,7 @@
 
 namespace H.Generators;
 
-internal class SourceGenerationHelper
+internal static class SourceGenerationHelper
 {
     public static string GenerateEvent(ClassData @class, EventData @event)
     {
@@ -14,14 +14,14 @@ namespace {@class.Namespace}
     {@class.Modifiers} partial class {@class.Name}
     {{
 {GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
-        public event {GenerateEventHandlerType(@class, @event)}? {@event.Name};
+        public event {GenerateEventHandlerType(@event)}? {@event.Name};
 
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
-        {GenerateOnEventModifier(@class)} {GenerateEventArgsType(@class, @event)} On{@event.Name}({GenerateOnEventParameters(@class, @event)})
+        {GenerateOnEventModifier(@class)} {GenerateEventArgsType(@event)} On{@event.Name}({GenerateOnEventParameters(@event)})
         {{
-            {GenerateArgs(@class, @event)}
+            {GenerateArgs(@event)}
             {@event.Name}?.Invoke(this, args);
 
             return args;
@@ -30,17 +30,17 @@ namespace {@class.Namespace}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
 
-    public static string GenerateArgs(ClassData @class, EventData @event)
+    private static string GenerateArgs(EventData @event)
     {
         if (@event.Type != null)
         {
             return string.Empty;
         }
 
-        return $"var args = new {GenerateEventArgsType(@class, @event)}();";
+        return $"var args = new {GenerateEventArgsType(@event)}();";
     }
 
-    public static string GenerateOnEventModifier(ClassData @class)
+    private static string GenerateOnEventModifier(ClassData @class)
     {
         if (@class.IsSealed)
         {
@@ -50,17 +50,17 @@ namespace {@class.Namespace}
         return "protected virtual";
     }
 
-    public static string GenerateOnEventParameters(ClassData @class, EventData @event)
+    private static string GenerateOnEventParameters(EventData @event)
     {
         if (@event.Type == null)
         {
             return string.Empty;
         }
 
-        return $"{GenerateEventArgsType(@class, @event)} args";
+        return $"{GenerateEventArgsType(@event)} args";
     }
 
-    public static string GenerateType(string fullTypeName, bool isSpecialType)
+    private static string GenerateType(string fullTypeName, bool isSpecialType)
     {
         if (isSpecialType)
         {
@@ -73,7 +73,7 @@ namespace {@class.Namespace}
         };
     }
 
-    public static string GenerateEventArgsType(ClassData @class, EventData @event)
+    private static string GenerateEventArgsType(EventData @event)
     {
         if (@event.Type != null)
         {
@@ -83,7 +83,7 @@ namespace {@class.Namespace}
         return GenerateType("EventArgs");
     }
 
-    public static string GenerateEventHandlerType(ClassData @class, EventData @event)
+    private static string GenerateEventHandlerType(EventData @event)
     {
         if (@event.Type != null)
         {
@@ -93,19 +93,19 @@ namespace {@class.Namespace}
         return GenerateType("EventHandler");
     }
 
-    public static string GenerateType(string name)
+    private static string GenerateType(string name)
     {
         return $"System.{name}".WithGlobalPrefix();
     }
 
-    public static string GenerateXmlDocumentationFrom(string value)
+    private static string GenerateXmlDocumentationFrom(string value)
     {
         var lines = value.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
         return string.Join(Environment.NewLine, lines.Select(static line => $"        /// {line}"));
     }
 
-    public static string GenerateXmlDocumentationFrom(string? value, EventData @event)
+    private static string GenerateXmlDocumentationFrom(string? value, EventData @event)
     {
         value ??= @$"<summary>
 {(@event.Description != null ? $"{@event.Description}" : " ")}
