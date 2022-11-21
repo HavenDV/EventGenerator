@@ -26,7 +26,7 @@ namespace {@class.Namespace}
 
             return args;
         }}
-{(@event.Types.Length <= 1 ? " " : $@"
+{(!@event.Types.Any() || @event.IsEventArgs ? " " : $@"
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
@@ -142,11 +142,12 @@ namespace {@class.Namespace}
     
     private static string GenerateEventArgsType(ClassData @class, EventData @event)
     {
-        if (@event.Types.Length > 1)
+        if (@event.Types.Any() &&
+            !@event.IsEventArgs)
         {
             return $"{GenerateType($"{@class.Namespace}.{@class.Name}.{@event.Name}EventArgs", false)}";
         }
-        if (@event.Types.Length == 1)
+        if (@event.IsEventArgs)
         {
             return GenerateType(@event.Types[0]);
         }

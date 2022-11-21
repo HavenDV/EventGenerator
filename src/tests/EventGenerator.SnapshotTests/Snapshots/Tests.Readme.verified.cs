@@ -7,12 +7,12 @@ namespace H.Generators.IntegrationTests
     {
         /// <summary>
         /// </summary>
-        public event global::System.EventHandler<global::H.Generators.IntegrationTests.MyArgs>? Changed;
+        public event global::System.EventHandler<global::H.Generators.IntegrationTests.MyEventArgs>? Changed;
 
         /// <summary>
         /// A helper method to raise the Changed event.
         /// </summary>
-        protected virtual global::H.Generators.IntegrationTests.MyArgs OnChanged(global::H.Generators.IntegrationTests.MyArgs args)
+        protected virtual global::H.Generators.IntegrationTests.MyEventArgs OnChanged(global::H.Generators.IntegrationTests.MyEventArgs args)
         {
             Changed?.Invoke(this, args);
 

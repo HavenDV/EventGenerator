@@ -79,7 +79,8 @@ public class EventGenerator : IIncrementalGenerator
                     context.AddTextSource(
                         hintName: $"{@class.Name}.Events.{@event.Name}.generated.cs",
                         text: SourceGenerationHelper.GenerateEvent(@class, @event));
-                    if (@event.Types.Length > 1)
+                    if (@event.Types.Any() &&
+                        !@event.IsEventArgs)
                     {
                         context.AddTextSource(
                             hintName: $"{@class.Name}.EventArgs.{@event.Name}EventArgs.generated.cs",

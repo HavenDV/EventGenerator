@@ -17,11 +17,21 @@ public partial class MyClass
     public Task Readme()
     {
         return CheckSourceAsync(@"
-public class MyArgs : System.EventArgs
+public class MyEventArgs : System.EventArgs
 {
 }
 
-[Event<MyArgs>(""Changed"")]
+[Event<MyEventArgs>(""Changed"")]
+public partial class MyClass
+{
+}");
+    }
+
+    [TestMethod]
+    public Task OneTypeNoArgs()
+    {
+        return CheckSourceAsync(@"
+[Event<string>(""Changed"")]
 public partial class MyClass
 {
 }");
