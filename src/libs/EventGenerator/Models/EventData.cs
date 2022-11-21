@@ -2,6 +2,6 @@
 
 public readonly record struct EventData(
     string Name,
-    string? Type,
+    TypeData[] Types,
     string? Description,
     string? XmlDocumentation);

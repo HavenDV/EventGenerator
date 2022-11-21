@@ -26,4 +26,24 @@ public partial class MyClass
 {
 }");
     }
+
+    [TestMethod]
+    public Task TwoTypes()
+    {
+        return CheckSourceAsync(@"
+[Event<string, string>(""Changed"")]
+public partial class MyClass
+{
+}");
+    }
+
+    [TestMethod]
+    public Task ThreeTypes()
+    {
+        return CheckSourceAsync(@"
+[Event<string, string, System.Version>(""Changed"")]
+public partial class MyClass
+{
+}");
+    }
 }

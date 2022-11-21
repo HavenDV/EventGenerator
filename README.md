@@ -1,5 +1,5 @@
 # EventGenerator
-Generated events and OnEvent() methods. 
+Generated events and OnEvent() methods. Can generate complex EventArgs from multi-type attributes.
 
 ## Install
 ```

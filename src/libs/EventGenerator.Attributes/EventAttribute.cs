@@ -11,7 +11,7 @@ namespace EventGenerator;
 /// </summary>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
-public sealed class EventAttribute : global::System.Attribute
+public class EventAttribute : global::System.Attribute
 {
     /// <summary>
     /// Name.
@@ -19,9 +19,9 @@ public sealed class EventAttribute : global::System.Attribute
     public string Name { get; }
 
     /// <summary>
-    /// Type of event handler.
+    /// Types of event handler.
     /// </summary>
-    public global::System.Type? Type { get; }
+    public global::System.Type[] Types { get; }
 
     /// <summary>
     /// Description of this dependency property. <br/>
@@ -40,14 +40,14 @@ public sealed class EventAttribute : global::System.Attribute
     /// 
     /// </summary>
     /// <param name="name"></param>
-    /// <param name="type"></param>
+    /// <param name="types"></param>
     /// <exception cref="global::System.ArgumentNullException"></exception>
     public EventAttribute(
         string name,
-        global::System.Type? type = null)
+        params global::System.Type[] types)
     {
         Name = name ?? throw new global::System.ArgumentNullException(nameof(name));
-        Type = type;
+        Types = types;
     }
 }
 
@@ -57,40 +57,203 @@ public sealed class EventAttribute : global::System.Attribute
 /// <typeparam name="T">Type of event handler.</typeparam>
 [global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
-public sealed class EventAttribute<T> : global::System.Attribute
+public sealed class EventAttribute<T> : EventAttribute
 {
-    /// <summary>
-    /// Name.
-    /// </summary>
-    public string Name { get; }
-
-    /// <summary>
-    /// Type of event handler.
-    /// </summary>
-    public global::System.Type Type { get; }
-
-    /// <summary>
-    /// Description of this dependency property. <br/>
-    /// This will also be used in the xml documentation if not explicitly specified. <br/>
-    /// Default - <see langword="null"/>.
-    /// </summary>
-    public string? Description { get; set; }
-
-    /// <summary>
-    /// The event xml documentation. <br/>
-    /// Default - "&lt;summary&gt;&lt;/summary&gt;".
-    /// </summary>
-    public string XmlDocumentation { get; set; } = string.Empty;
-
     /// <summary>
     /// 
     /// </summary>
     /// <param name="name"></param>
     /// <exception cref="global::System.ArgumentNullException"></exception>
     public EventAttribute(
-        string name)
+        string name) : base(name, typeof(T))
     {
-        Name = name ?? throw new global::System.ArgumentNullException(nameof(name));
-        Type = typeof(T);
+    }
+}
+
+/// <summary>
+/// Generates an event.
+/// </summary>
+/// <typeparam name="T1">Type of event handler.</typeparam>
+/// <typeparam name="T2">Type of event handler.</typeparam>
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
+public sealed class EventAttribute<T1, T2> : EventAttribute
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
+    public EventAttribute(
+        string name) : base(name, typeof(T1), typeof(T2))
+    {
+    }
+}
+
+/// <summary>
+/// Generates an event.
+/// </summary>
+/// <typeparam name="T1">Type of event handler.</typeparam>
+/// <typeparam name="T2">Type of event handler.</typeparam>
+/// <typeparam name="T3">Type of event handler.</typeparam>
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
+public sealed class EventAttribute<T1, T2, T3> : EventAttribute
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
+    public EventAttribute(
+        string name) : base(name, typeof(T1), typeof(T2), typeof(T3))
+    {
+    }
+}
+
+/// <summary>
+/// Generates an event.
+/// </summary>
+/// <typeparam name="T1">Type of event handler.</typeparam>
+/// <typeparam name="T2">Type of event handler.</typeparam>
+/// <typeparam name="T3">Type of event handler.</typeparam>
+/// <typeparam name="T4">Type of event handler.</typeparam>
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
+public sealed class EventAttribute<T1, T2, T3, T4> : EventAttribute
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
+    public EventAttribute(
+        string name) : base(name, typeof(T1), typeof(T2), typeof(T3), typeof(T4))
+    {
+    }
+}
+
+/// <summary>
+/// Generates an event.
+/// </summary>
+/// <typeparam name="T1">Type of event handler.</typeparam>
+/// <typeparam name="T2">Type of event handler.</typeparam>
+/// <typeparam name="T3">Type of event handler.</typeparam>
+/// <typeparam name="T4">Type of event handler.</typeparam>
+/// <typeparam name="T5">Type of event handler.</typeparam>
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
+public sealed class EventAttribute<T1, T2, T3, T4, T5> : EventAttribute
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
+    public EventAttribute(
+        string name) : base(name, typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5))
+    {
+    }
+}
+
+/// <summary>
+/// Generates an event.
+/// </summary>
+/// <typeparam name="T1">Type of event handler.</typeparam>
+/// <typeparam name="T2">Type of event handler.</typeparam>
+/// <typeparam name="T3">Type of event handler.</typeparam>
+/// <typeparam name="T4">Type of event handler.</typeparam>
+/// <typeparam name="T5">Type of event handler.</typeparam>
+/// <typeparam name="T6">Type of event handler.</typeparam>
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
+public sealed class EventAttribute<T1, T2, T3, T4, T5, T6> : EventAttribute
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
+    public EventAttribute(
+        string name) : base(name, typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6))
+    {
+    }
+}
+
+/// <summary>
+/// Generates an event.
+/// </summary>
+/// <typeparam name="T1">Type of event handler.</typeparam>
+/// <typeparam name="T2">Type of event handler.</typeparam>
+/// <typeparam name="T3">Type of event handler.</typeparam>
+/// <typeparam name="T4">Type of event handler.</typeparam>
+/// <typeparam name="T5">Type of event handler.</typeparam>
+/// <typeparam name="T6">Type of event handler.</typeparam>
+/// <typeparam name="T7">Type of event handler.</typeparam>
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
+public sealed class EventAttribute<T1, T2, T3, T4, T5, T6, T7> : EventAttribute
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
+    public EventAttribute(
+        string name) : base(name, typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7))
+    {
+    }
+}
+
+/// <summary>
+/// Generates an event.
+/// </summary>
+/// <typeparam name="T1">Type of event handler.</typeparam>
+/// <typeparam name="T2">Type of event handler.</typeparam>
+/// <typeparam name="T3">Type of event handler.</typeparam>
+/// <typeparam name="T4">Type of event handler.</typeparam>
+/// <typeparam name="T5">Type of event handler.</typeparam>
+/// <typeparam name="T6">Type of event handler.</typeparam>
+/// <typeparam name="T7">Type of event handler.</typeparam>
+/// <typeparam name="T8">Type of event handler.</typeparam>
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
+public sealed class EventAttribute<T1, T2, T3, T4, T5, T6, T7, T8> : EventAttribute
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
+    public EventAttribute(
+        string name) : base(name, typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8))
+    {
+    }
+}
+
+/// <summary>
+/// Generates an event.
+/// </summary>
+/// <typeparam name="T1">Type of event handler.</typeparam>
+/// <typeparam name="T2">Type of event handler.</typeparam>
+/// <typeparam name="T3">Type of event handler.</typeparam>
+/// <typeparam name="T4">Type of event handler.</typeparam>
+/// <typeparam name="T5">Type of event handler.</typeparam>
+/// <typeparam name="T6">Type of event handler.</typeparam>
+/// <typeparam name="T7">Type of event handler.</typeparam>
+/// <typeparam name="T8">Type of event handler.</typeparam>
+/// <typeparam name="T9">Type of event handler.</typeparam>
+[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
+public sealed class EventAttribute<T1, T2, T3, T4, T5, T6, T7, T8, T9> : EventAttribute
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <exception cref="global::System.ArgumentNullException"></exception>
+    public EventAttribute(
+        string name) : base(name, typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9))
+    {
     }
 }

@@ -79,6 +79,12 @@ public class EventGenerator : IIncrementalGenerator
                     context.AddTextSource(
                         hintName: $"{@class.Name}.Events.{@event.Name}.generated.cs",
                         text: SourceGenerationHelper.GenerateEvent(@class, @event));
+                    if (@event.Types.Length > 1)
+                    {
+                        context.AddTextSource(
+                            hintName: $"{@class.Name}.EventArgs.{@event.Name}EventArgs.generated.cs",
+                            text: SourceGenerationHelper.GenerateEventArgs(@class, @event));
+                    }
                 }
             }
         }
@@ -139,9 +145,18 @@ public class EventGenerator : IIncrementalGenerator
                 var attributeClass = attribute.AttributeClass?.ToDisplayString() ?? string.Empty;
                 if (attributeClass.StartsWith(EventAttributeFullName, StringComparison.InvariantCulture))
                 {
-                    var type =
-                        GetGenericTypeArgumentFromAttributeData(attribute, 0)?.ToDisplayString() ??
-                        GetPropertyFromAttributeData(attribute, nameof(EventAttribute.Type))?.Value?.ToString();
+                    var types =
+                        attribute.AttributeClass?.TypeArguments
+                            .Select(argument => new TypeData(
+                                FullName: argument.ToDisplayString(),
+                                IsSpecial: argument.SpecialType != SpecialType.None))
+                            .ToArray() ??
+                        GetPropertyFromAttributeData(attribute, nameof(EventAttribute.Types))?.Values
+                            .Select(argument => new TypeData(
+                                FullName: argument.ToString(),
+                                IsSpecial: argument.Kind == TypedConstantKind.Primitive))
+                            .ToArray() ??
+                        Array.Empty<TypeData>();
 
                     var description = GetPropertyFromAttributeData(attribute, nameof(EventAttribute.Description))?.Value?.ToString();
 
@@ -149,7 +164,7 @@ public class EventGenerator : IIncrementalGenerator
 
                     var value = new EventData(
                         Name: name,
-                        Type: type,
+                        Types: types,
                         Description: description,
                         XmlDocumentation: xmlDocumentation);
                     
@@ -203,11 +218,6 @@ public class EventGenerator : IIncrementalGenerator
         }
 
         return classSymbol.ToString();
-    }
-
-    private static ITypeSymbol? GetGenericTypeArgumentFromAttributeData(AttributeData data, int position)
-    {
-        return data.AttributeClass?.TypeArguments.ElementAtOrDefault(position);
     }
 
     private static TypedConstant? GetPropertyFromAttributeData(AttributeData data, string name)
