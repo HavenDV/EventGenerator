@@ -61,7 +61,7 @@ public partial class MyClass
     public Task TwoTypesWithNames()
     {
         return CheckSourceAsync(@"
-[Event<string, string>(""DataChanged"", PropertyNames = new [] { ""Title"", ""Description"" })]
+[Event<string, string>(""DataChanged"", PropertyNames = new [] { ""Title"", ""Namespace"" })]
 public partial class MyClass
 {
 }");

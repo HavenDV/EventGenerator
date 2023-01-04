@@ -24,9 +24,9 @@ namespace H.Generators.IntegrationTests
         /// </summary>
         protected virtual global::H.Generators.IntegrationTests.MyClass.DataChangedEventArgs OnDataChanged(
             string title,
-            string description)
+            string @namespace)
         {
-            var args = new global::H.Generators.IntegrationTests.MyClass.DataChangedEventArgs(title, description);
+            var args = new global::H.Generators.IntegrationTests.MyClass.DataChangedEventArgs(title, @namespace);
             DataChanged?.Invoke(this, args);
 
             return args;

@@ -18,24 +18,24 @@ namespace H.Generators.IntegrationTests
             /// <summary>
             /// 
             /// </summary>
-            public string Description { get; }
+            public string Namespace { get; }
 
             /// <summary>
             /// 
             /// </summary>
-            public DataChangedEventArgs(string title, string description)
+            public DataChangedEventArgs(string title, string @namespace)
             {
                 Title = title;
-                Description = description;
+                Namespace = @namespace;
             }
 
             /// <summary>
             /// 
             /// </summary>
-            public void Deconstruct(out string title, out string description)
+            public void Deconstruct(out string title, out string @namespace)
             {
                 title = Title;
-                description = Description;
+                @namespace = Namespace;
             }
         }
     }
