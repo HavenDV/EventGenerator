@@ -53,6 +53,9 @@ namespace {@class.Namespace}
 {{
     {@class.Modifiers} partial class {@class.Name}
     {{
+        /// <summary>
+        /// 
+        /// </summary>
         public class {@event.Name}EventArgs : global::System.EventArgs
         {{
 {@event.Types.Select(static type => @$" 

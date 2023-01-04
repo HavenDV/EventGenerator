@@ -5,6 +5,9 @@ namespace H.Generators.IntegrationTests
 {
     public partial class MyClass
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public class ChangedEventArgs : global::System.EventArgs
         {
             /// <summary>
