@@ -37,6 +37,14 @@ namespace H.Generators.IntegrationTests
                 value1 = Value1;
                 value2 = Value2;
             }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public override string ToString()
+            {
+                return $"(Value1={Value1}, Value2={Value2})";
+            }
         }
     }
 }

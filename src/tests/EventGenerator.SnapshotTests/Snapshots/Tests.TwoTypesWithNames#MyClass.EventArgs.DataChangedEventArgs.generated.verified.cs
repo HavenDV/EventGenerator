@@ -37,6 +37,14 @@ namespace H.Generators.IntegrationTests
                 title = Title;
                 @namespace = Namespace;
             }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public override string ToString()
+            {
+                return $"(Title={Title}, Namespace={Namespace})";
+            }
         }
     }
 }

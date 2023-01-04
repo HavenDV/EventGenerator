@@ -85,6 +85,14 @@ namespace {@class.Namespace}
                 {type.ParameterName} = {type.PropertyName};
 ".RemoveBlankLinesWhereOnlyWhitespaces()).Inject()}
             }}
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public override string ToString()
+            {{
+                return $""({string.Join(", ", @event.Types.Select(static type => $"{type.PropertyName}={{{type.PropertyName}}}"))})"";
+            }}
         }}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
