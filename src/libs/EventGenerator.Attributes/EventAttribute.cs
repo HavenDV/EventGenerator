@@ -24,6 +24,11 @@ public class EventAttribute : global::System.Attribute
     public global::System.Type[] Types { get; }
 
     /// <summary>
+    /// Names of generated EventArgs properties.
+    /// </summary>
+    public string[] PropertyNames { get; set; }
+
+    /// <summary>
     /// Description of this dependency property. <br/>
     /// This will also be used in the xml documentation if not explicitly specified. <br/>
     /// Default - <see langword="null"/>.
@@ -48,6 +53,11 @@ public class EventAttribute : global::System.Attribute
     {
         Name = name ?? throw new global::System.ArgumentNullException(nameof(name));
         Types = types;
+        // Disabled because this code is delivered to the final project directly and it may be lower than .Net Framework 4.6
+        // ReSharper disable once UseArrayEmptyMethod
+#pragma warning disable CA1825
+        PropertyNames = new string[0];
+#pragma warning restore CA1825
     }
 }
 

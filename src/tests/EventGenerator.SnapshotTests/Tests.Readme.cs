@@ -56,4 +56,14 @@ public partial class MyClass
 {
 }");
     }
+
+    [TestMethod]
+    public Task TwoTypesWithNames()
+    {
+        return CheckSourceAsync(@"
+[Event<string, string>(""DataChanged"", PropertyNames = new [] { ""Title"", ""Description"" })]
+public partial class MyClass
+{
+}");
+    }
 }

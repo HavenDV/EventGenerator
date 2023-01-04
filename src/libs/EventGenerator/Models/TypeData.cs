@@ -2,4 +2,6 @@
 
 public readonly record struct TypeData(
     string FullName,
-    bool IsSpecial);
+    bool IsSpecial,
+    string PropertyName,
+    string ParameterName);

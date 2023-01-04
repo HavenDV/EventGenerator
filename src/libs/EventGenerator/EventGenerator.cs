@@ -146,18 +146,48 @@ public class EventGenerator : IIncrementalGenerator
                 var attributeClass = attribute.AttributeClass?.ToDisplayString() ?? string.Empty;
                 if (attributeClass.StartsWith(EventAttributeFullName, StringComparison.InvariantCulture))
                 {
+                    var propertyNamesConstant = GetPropertyFromAttributeData(attribute, nameof(EventAttribute.PropertyNames));
+                    var propertyNames =
+                        propertyNamesConstant is { IsNull: false }
+                            ? GetPropertyFromAttributeData(attribute, nameof(EventAttribute.PropertyNames))?.Values
+                                .Select(argument => argument.Value?.ToString() ?? string.Empty)
+                                .ToArray() ?? Array.Empty<string>()
+                            : Array.Empty<string>();
                     var types =
                         attribute.AttributeClass?.TypeArguments
-                            .Select(argument => new TypeData(
+                            .Select((argument, i) => new TypeData(
                                 FullName: argument.ToDisplayString(),
-                                IsSpecial: argument.SpecialType != SpecialType.None))
+                                IsSpecial: argument.SpecialType != SpecialType.None,
+                                PropertyName: propertyNames.ElementAtOrDefault(i)?.ToPropertyName() ?? $"Value{i + 1}",
+                                ParameterName: propertyNames.ElementAtOrDefault(i)?.ToParameterName() ?? $"value{i + 1}"))
                             .ToArray() ??
                         GetPropertyFromAttributeData(attribute, nameof(EventAttribute.Types))?.Values
-                            .Select(argument => new TypeData(
+                            .Select((argument, i) => new TypeData(
                                 FullName: argument.ToString(),
-                                IsSpecial: argument.Kind == TypedConstantKind.Primitive))
+                                IsSpecial: argument.Kind == TypedConstantKind.Primitive,
+                                PropertyName: propertyNames.ElementAtOrDefault(i)?.ToPropertyName() ?? $"Value{i + 1}",
+                                ParameterName: propertyNames.ElementAtOrDefault(i)?.ToParameterName() ?? $"value{i + 1}"))
                             .ToArray() ??
                         Array.Empty<TypeData>();
+                    if (types.Length == 1)
+                    {
+                        types = types
+                            .Select(static value => value with
+                            {
+                                PropertyName = value.PropertyName.Replace("1", string.Empty),
+                                ParameterName = value.ParameterName.Replace("1", string.Empty),
+                            })
+                            .ToArray();
+                    }
+                    if (propertyNames.Any())
+                    {
+                        types = types.Zip(propertyNames, static (value, propertyName) => value with
+                            {
+                                PropertyName = propertyName.ToPropertyName(),
+                                ParameterName = propertyName.ToParameterName(),
+                            })
+                            .ToArray();
+                    }
 
                     var description = GetPropertyFromAttributeData(attribute, nameof(EventAttribute.Description))?.Value?.ToString();
 

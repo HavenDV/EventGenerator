@@ -31,11 +31,11 @@ namespace {@class.Namespace}
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
         {GenerateOnEventModifier(@class)} {GenerateEventArgsType(@class, @event)} On{@event.Name}(
-{@event.Types.Select(static (type, i) => @$" 
-            {GenerateType(type)} value{i + 1},
+{@event.Types.Select(static type => @$" 
+            {GenerateType(type)} {type.ParameterName},
 ".RemoveBlankLinesWhereOnlyWhitespaces()).Inject().Trim(',')})
         {{
-            var args = new {GenerateEventArgsType(@class, @event)}({string.Join(", ", @event.Types.Select(static (_, i) => $"value{i + 1}"))});
+            var args = new {GenerateEventArgsType(@class, @event)}({string.Join(", ", @event.Types.Select(static type => type.ParameterName))});
             {@event.Name}?.Invoke(this, args);
 
             return args;
@@ -55,31 +55,31 @@ namespace {@class.Namespace}
     {{
         public class {@event.Name}EventArgs : global::System.EventArgs
         {{
-{@event.Types.Select(static (type, i) => @$" 
+{@event.Types.Select(static type => @$" 
             /// <summary>
             /// 
             /// </summary>
-            public {GenerateType(type)} Value{i + 1} {{ get; }}
+            public {GenerateType(type)} {type.PropertyName} {{ get; }}
 
 ".RemoveBlankLinesWhereOnlyWhitespaces()).Inject()}
 
             /// <summary>
             /// 
             /// </summary>
-            public {@event.Name}EventArgs({string.Join(", ", @event.Types.Select(static (type, i) => $"{GenerateType(type)} value{i + 1}"))})
+            public {@event.Name}EventArgs({string.Join(", ", @event.Types.Select(static type => $"{GenerateType(type)} {type.ParameterName}"))})
             {{
-{@event.Types.Select(static (_, i) => @$" 
-                Value{i + 1} = value{i + 1};
+{@event.Types.Select(static type => @$" 
+                {type.PropertyName} = {type.ParameterName};
 ".RemoveBlankLinesWhereOnlyWhitespaces()).Inject()}
             }}
 
             /// <summary>
             /// 
             /// </summary>
-            public void Deconstruct({string.Join(", ", @event.Types.Select(static (type, i) => $"out {GenerateType(type)} value{i + 1}"))})
+            public void Deconstruct({string.Join(", ", @event.Types.Select(static type => $"out {GenerateType(type)} {type.ParameterName}"))})
             {{
-{@event.Types.Select(static (_, i) => @$" 
-                value{i + 1} = Value{i + 1};
+{@event.Types.Select(static type => @$" 
+                {type.ParameterName} = {type.PropertyName};
 ".RemoveBlankLinesWhereOnlyWhitespaces()).Inject()}
             }}
         }}
