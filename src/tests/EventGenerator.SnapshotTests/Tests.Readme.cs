@@ -66,4 +66,14 @@ public partial class MyClass
 {
 }");
     }
+
+    [TestMethod]
+    public Task StaticEvent()
+    {
+        return CheckSourceAsync(@"
+[Event(""StaticEvent"", IsStatic = true)]
+public static partial class MyClass
+{
+}");
+    }
 }

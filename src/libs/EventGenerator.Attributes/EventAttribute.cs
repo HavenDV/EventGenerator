@@ -45,6 +45,11 @@ public class EventAttribute : global::System.Attribute
     public string XmlDocumentation { get; set; } = string.Empty;
 
     /// <summary>
+    /// Default - <see langword="false"/>.
+    /// </summary>
+    public bool IsStatic { get; set; }
+
+    /// <summary>
     /// 
     /// </summary>
     /// <param name="name"></param>

@@ -6,6 +6,10 @@ internal static class SourceGenerationHelper
 {
     public static string GenerateEvent(ClassData @class, EventData @event)
     {
+        var sender = @event.IsStatic
+            ? "sender"
+            : "this";
+        
         return @$" 
 #nullable enable
 
@@ -14,15 +18,15 @@ namespace {@class.Namespace}
     {@class.Modifiers} partial class {@class.Name}
     {{
 {GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
-        public event {GenerateEventHandlerType(@class, @event)}? {@event.Name};
+        public{(@event.IsStatic ? " static" : "")} event {GenerateEventHandlerType(@class, @event)}? {@event.Name};
 
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
-        {GenerateOnEventModifier(@class)} {GenerateEventArgsType(@class, @event)} On{@event.Name}({GenerateOnEventParameters(@class, @event)})
+        {GenerateOnEventModifier(@class, @event)} {GenerateEventArgsType(@class, @event)} On{@event.Name}({GenerateOnEventParameters(@class, @event)})
         {{
             {GenerateArgs(@class, @event)}
-            {@event.Name}?.Invoke(this, args);
+            {@event.Name}?.Invoke({sender}, args);
 
             return args;
         }}
@@ -30,13 +34,11 @@ namespace {@class.Namespace}
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
-        {GenerateOnEventModifier(@class)} {GenerateEventArgsType(@class, @event)} On{@event.Name}(
-{@event.Types.Select(static type => @$" 
-            {GenerateType(type)} {type.ParameterName},
-".RemoveBlankLinesWhereOnlyWhitespaces()).Inject().Trim(',')})
+        {GenerateOnEventModifier(@class, @event)} {GenerateEventArgsType(@class, @event)} On{@event.Name}(
+{GenerateOnEventOverloadParameters(@event)})
         {{
             var args = new {GenerateEventArgsType(@class, @event)}({string.Join(", ", @event.Types.Select(static type => type.ParameterName))});
-            {@event.Name}?.Invoke(this, args);
+            {@event.Name}?.Invoke({sender}, args);
 
             return args;
         }}")}
@@ -108,24 +110,52 @@ namespace {@class.Namespace}
         return $"var args = new {GenerateEventArgsType(@class, @event)}();";
     }
 
-    private static string GenerateOnEventModifier(ClassData @class)
+    private static string GenerateOnEventModifier(ClassData @class, EventData @event)
     {
-        if (@class.IsSealed)
+        var modifiers = string.Empty;
+        if (@event.IsStatic)
         {
-            return "private";
+            modifiers += "internal static";
         }
-
-        return "protected virtual";
+        else if (@class.IsSealed)
+        {
+            modifiers += "private";
+        }
+        else
+        {
+            modifiers += "protected virtual";
+        }
+        
+        return modifiers;
     }
 
     private static string GenerateOnEventParameters(ClassData @class, EventData @event)
     {
-        if (!@event.Types.Any())
+        var args = new List<string>(2);
+        if (@event.IsStatic)
         {
-            return string.Empty;
+            args.Add("object? sender");
+        }
+        if (@event.Types.Any())
+        {
+            args.Add($"{GenerateEventArgsType(@class, @event)} args");
         }
 
-        return $"{GenerateEventArgsType(@class, @event)} args";
+        return string.Join(", ", args);
+    }
+
+    private static string GenerateOnEventOverloadParameters(EventData @event)
+    {
+        var args = new List<string>(1 + @event.Types.Length);
+        if (@event.IsStatic)
+        {
+            args.Add("object? sender");
+        }
+        args.AddRange(@event.Types.Select(type => $"{GenerateType(type)} {type.ParameterName}"));
+
+        return args.Select(static arg => @$" 
+            {arg},
+".RemoveBlankLinesWhereOnlyWhitespaces()).Inject().Trim(',');
     }
 
     private static string GenerateType(string fullTypeName, bool isSpecialType)

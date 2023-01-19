@@ -190,14 +190,15 @@ public class EventGenerator : IIncrementalGenerator
                     }
 
                     var description = GetPropertyFromAttributeData(attribute, nameof(EventAttribute.Description))?.Value?.ToString();
-
                     var xmlDocumentation = GetPropertyFromAttributeData(attribute, nameof(EventAttribute.XmlDocumentation))?.Value?.ToString();
+                    var isStatic = GetPropertyFromAttributeData(attribute, nameof(EventAttribute.IsStatic))?.Value?.ToString() ?? bool.FalseString;
 
                     var value = new EventData(
                         Name: name,
                         Types: types,
                         Description: description,
-                        XmlDocumentation: xmlDocumentation);
+                        XmlDocumentation: xmlDocumentation,
+                        IsStatic: bool.Parse(isStatic));
                     
                     events.Add(value);
                 }
