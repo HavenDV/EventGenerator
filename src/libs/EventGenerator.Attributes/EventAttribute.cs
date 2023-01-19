@@ -4,6 +4,9 @@
 // ReSharper disable MemberCanBePrivate.Global
 #nullable enable
 
+// Avoid unsealed attributes
+#pragma warning disable CA1813 
+
 namespace EventGenerator;
 
 /// <summary>
