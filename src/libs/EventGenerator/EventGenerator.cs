@@ -26,7 +26,6 @@ public class EventGenerator : IIncrementalGenerator
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .SelectMany(static (x, _) => x)
             .AddSource(context);
         context.SyntaxProvider
             .ForAttributeWithMetadataName("EventGenerator.EventAttribute`1")
@@ -34,7 +33,6 @@ public class EventGenerator : IIncrementalGenerator
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .SelectMany(static (x, _) => x)
             .AddSource(context);
         context.SyntaxProvider
             .ForAttributeWithMetadataName("EventGenerator.EventAttribute`2")
@@ -42,7 +40,6 @@ public class EventGenerator : IIncrementalGenerator
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .SelectMany(static (x, _) => x)
             .AddSource(context);
         context.SyntaxProvider
             .ForAttributeWithMetadataName("EventGenerator.EventAttribute`3")
@@ -50,7 +47,6 @@ public class EventGenerator : IIncrementalGenerator
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .SelectMany(static (x, _) => x)
             .AddSource(context);
         context.SyntaxProvider
             .ForAttributeWithMetadataName("EventGenerator.EventAttribute`4")
@@ -58,7 +54,6 @@ public class EventGenerator : IIncrementalGenerator
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .SelectMany(static (x, _) => x)
             .AddSource(context);
         context.SyntaxProvider
             .ForAttributeWithMetadataName("EventGenerator.EventAttribute`5")
@@ -66,7 +61,6 @@ public class EventGenerator : IIncrementalGenerator
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .SelectMany(static (x, _) => x)
             .AddSource(context);
         context.SyntaxProvider
             .ForAttributeWithMetadataName("EventGenerator.EventAttribute`6")
@@ -74,7 +68,6 @@ public class EventGenerator : IIncrementalGenerator
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .SelectMany(static (x, _) => x)
             .AddSource(context);
         context.SyntaxProvider
             .ForAttributeWithMetadataName("EventGenerator.EventAttribute`7")
@@ -82,7 +75,6 @@ public class EventGenerator : IIncrementalGenerator
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .SelectMany(static (x, _) => x)
             .AddSource(context);
         context.SyntaxProvider
             .ForAttributeWithMetadataName("EventGenerator.EventAttribute`8")
@@ -90,7 +82,6 @@ public class EventGenerator : IIncrementalGenerator
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .SelectMany(static (x, _) => x)
             .AddSource(context);
         context.SyntaxProvider
             .ForAttributeWithMetadataName("EventGenerator.EventAttribute`9")
@@ -98,7 +89,6 @@ public class EventGenerator : IIncrementalGenerator
             .SelectAndReportExceptions(PrepareData, context, Id)
             .WhereNotNull()
             .SelectAndReportExceptions(GetSourceCode, context, Id)
-            .SelectMany(static (x, _) => x)
             .AddSource(context);
     }
 
@@ -131,16 +121,14 @@ public class EventGenerator : IIncrementalGenerator
                     FullName: argument.ToDisplayString(),
                     IsSpecial: argument.SpecialType != SpecialType.None,
                     PropertyName: propertyNames.ElementAtOrDefault(i)?.ToPropertyName() ?? $"Value{i + 1}",
-                    ParameterName: propertyNames.ElementAtOrDefault(i)?.ToParameterName() ?? $"value{i + 1}",
-                    IsGeneric: argument.ToDisplayString().Contains('<') && argument.ToDisplayString().Contains('>')))
+                    ParameterName: propertyNames.ElementAtOrDefault(i)?.ToParameterName() ?? $"value{i + 1}"))
                 .ToArray() ??
             attribute.GetNamedArgument(nameof(EventAttribute.Types)).Values
                 .Select((argument, i) => new TypeData(
                     FullName: argument.ToString(),
                     IsSpecial: argument.Kind == TypedConstantKind.Primitive,
                     PropertyName: propertyNames.ElementAtOrDefault(i)?.ToPropertyName() ?? $"Value{i + 1}",
-                    ParameterName: propertyNames.ElementAtOrDefault(i)?.ToParameterName() ?? $"value{i + 1}",
-                    IsGeneric: argument.ToString().Contains('<') && argument.ToString().Contains('>')))
+                    ParameterName: propertyNames.ElementAtOrDefault(i)?.ToParameterName() ?? $"value{i + 1}"))
                 .ToArray();
         if (types.Length == 1)
         {
