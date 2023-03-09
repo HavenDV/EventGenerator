@@ -1,11 +1,5 @@
 ﻿<Project>
 
-  <ItemGroup>
-    <CompilerVisibleProperty Include="EventGenerator_DebuggerBreak"/>
-    <CompilerVisibleProperty Include="BuildingProject" />
-    <CompilerVisibleProperty Include="DesignTimeBuild" />
-  </ItemGroup>
-
   <PropertyGroup>
     <EventGenerator_EmbedAttributes>false</EventGenerator_EmbedAttributes>
     <EventGenerator_EmbeddedAttributesVisible>true</EventGenerator_EmbeddedAttributesVisible>
