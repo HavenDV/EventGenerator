@@ -351,3 +351,6 @@ MigrationBackup/
 
 # Idea
 .idea/
+
+# Snapshot files
+**/*.received.*
