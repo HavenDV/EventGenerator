@@ -109,6 +109,11 @@ namespace H.Generators.IntegrationTests
 }
 ```
 
+Open questions:
+- Should we use EventArgs for the single type case? This is useful, for example, 
+if the type of the Cancel property is bool, which allows you to tell the calling code to cancel something.
+- Should we always generate EventArgs or allow Action delegates to be used for these cases?
+
 ## Notes
 To use generic attributes, you need to set up `LangVersion` in your .csproj:
 ```xml
