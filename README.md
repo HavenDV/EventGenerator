@@ -13,7 +13,7 @@ Install-Package EventGenerator.Generator
 
 ## Usage
 ```cs
-[Event<string, string>(""DataChanged"", PropertyNames = new [] { ""Title"", ""Namespace"" })]
+[Event<string, string>("DataChanged", PropertyNames = new [] { "Title", "Namespace" })]
 public partial class MyClass
 {
 }
