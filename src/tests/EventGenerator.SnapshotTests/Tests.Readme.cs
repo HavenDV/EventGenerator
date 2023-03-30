@@ -1,7 +1,7 @@
 ﻿namespace H.Generators.SnapshotTests;
 
 [TestClass]
-public partial class Tests : VerifyBase
+public partial class Tests
 {
     [TestMethod]
     public Task WithoutType()
@@ -23,6 +23,20 @@ public class MyEventArgs : System.EventArgs
 
 [Event<MyEventArgs>(""Changed"")]
 public partial class MyClass
+{
+}");
+    }
+
+    [TestMethod]
+    public Task Generic()
+    {
+        return CheckSourceAsync(@"
+public class MyEventArgs<T> : System.EventArgs
+{
+}
+
+[Event<MyEventArgs<GenericType>>(""Changed"")]
+public partial class MyClass<T>
 {
 }");
     }

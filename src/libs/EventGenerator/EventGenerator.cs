@@ -121,14 +121,16 @@ public class EventGenerator : IIncrementalGenerator
                     FullName: argument.ToDisplayString(),
                     IsSpecial: argument.SpecialType != SpecialType.None,
                     PropertyName: propertyNames.ElementAtOrDefault(i)?.ToPropertyName() ?? $"Value{i + 1}",
-                    ParameterName: propertyNames.ElementAtOrDefault(i)?.ToParameterName() ?? $"value{i + 1}"))
+                    ParameterName: propertyNames.ElementAtOrDefault(i)?.ToParameterName() ?? $"value{i + 1}",
+                    IsGeneric: argument.ToDisplayString().Contains('<') && argument.ToDisplayString().Contains('>')))
                 .ToArray() ??
             attribute.GetNamedArgument(nameof(EventAttribute.Types)).Values
                 .Select((argument, i) => new TypeData(
                     FullName: argument.ToString(),
                     IsSpecial: argument.Kind == TypedConstantKind.Primitive,
                     PropertyName: propertyNames.ElementAtOrDefault(i)?.ToPropertyName() ?? $"Value{i + 1}",
-                    ParameterName: propertyNames.ElementAtOrDefault(i)?.ToParameterName() ?? $"value{i + 1}"))
+                    ParameterName: propertyNames.ElementAtOrDefault(i)?.ToParameterName() ?? $"value{i + 1}",
+                    IsGeneric: argument.ToString().Contains('<') && argument.ToString().Contains('>')))
                 .ToArray();
         if (types.Length == 1)
         {
@@ -171,17 +173,20 @@ public class EventGenerator : IIncrementalGenerator
     
     private static EquatableArray<FileWithName> GetSourceCode((ClassData Class, EventData Event) data)
     {
+        var className = data.Class.Name
+            .Replace("<", "{")
+            .Replace(">", "}");
         var files = new List<FileWithName>
         {
             new (
-                Name: $"{data.Class.Name}.Events.{data.Event.Name}.generated.cs",
+                Name: $"{className}.Events.{data.Event.Name}.generated.cs",
                 Text: SourceGenerationHelper.GenerateEvent(data.Class, data.Event))
         };
         if (data.Event.Types.Any() &&
             !data.Event.IsEventArgs)
         {
             files.Add(new FileWithName(
-                Name: $"{data.Class.Name}.EventArgs.{data.Event.Name}EventArgs.generated.cs",
+                Name: $"{className}.EventArgs.{data.Event.Name}EventArgs.generated.cs",
                 Text: SourceGenerationHelper.GenerateEventArgs(data.Class, data.Event)));
         }
         

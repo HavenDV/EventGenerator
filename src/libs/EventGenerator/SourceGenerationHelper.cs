@@ -190,7 +190,13 @@ namespace {@class.Namespace}
         }
         if (@event.IsEventArgs)
         {
-            return GenerateType(@event.Types[0]);
+            var type = GenerateType(@event.Types[0]);
+            if (@event.Types[0].IsGeneric)
+            {
+                type = type.Replace("EventGenerator.GenericType", "T");
+            }
+            
+            return type;
         }
 
         return GenerateSystemType("EventArgs");
