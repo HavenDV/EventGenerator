@@ -30,7 +30,7 @@ namespace H.Generators.IntegrationTests;
             assemblyName: "Tests",
             syntaxTrees: new[]
             {
-                CSharpSyntaxTree.ParseText(source, options: new CSharpParseOptions(LanguageVersion.Preview), cancellationToken: cancellationToken),
+                CSharpSyntaxTree.ParseText(source, cancellationToken: cancellationToken),
             },
             references: references
                 .Add(MetadataReference.CreateFromFile(typeof(global::EventGenerator.EventAttribute).Assembly.Location)),
@@ -40,7 +40,7 @@ namespace H.Generators.IntegrationTests;
         var driver = CSharpGeneratorDriver
             .Create(generator)
             .WithUpdatedAnalyzerConfigOptions(new DictionaryAnalyzerConfigOptionsProvider(globalOptions))
-            .RunGeneratorsAndUpdateCompilation(LanguageVersion.Preview, compilation, out compilation, out _, cancellationToken);
+            .RunGeneratorsAndUpdateCompilation(compilation, out compilation, out _, cancellationToken);
         var diagnostics = compilation.GetDiagnostics(cancellationToken);
 
         await Task.WhenAll(

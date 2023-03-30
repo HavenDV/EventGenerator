@@ -20,6 +20,27 @@ public class EventGenerator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        context.RegisterPostInitializationOutput(static context => context.AddSource(
+            "EventGenerator.Disposable.g.cs", 
+            @"
+namespace EventGenerator
+{
+    internal class Disposable : global::System.IDisposable
+    {
+        private readonly global::System.Action action;
+
+        public Disposable(global::System.Action action)
+        {
+            this.action = action;
+        }
+
+        public void Dispose()
+        {
+            action();
+        }
+    }
+}"));
+        
         context.SyntaxProvider
             .ForAttributeWithMetadataName("EventGenerator.EventAttribute")
             .SelectManyAllAttributesOfCurrentClassSyntax()

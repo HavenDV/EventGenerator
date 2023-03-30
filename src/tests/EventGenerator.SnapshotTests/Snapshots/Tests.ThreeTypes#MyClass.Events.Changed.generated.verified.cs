@@ -10,6 +10,16 @@ namespace H.Generators.IntegrationTests
         public event global::System.EventHandler<global::H.Generators.IntegrationTests.MyClass.ChangedEventArgs>? Changed;
 
         /// <summary>
+        /// A helper method to subscribe the Changed event.
+        /// </summary>
+        public global::System.IDisposable SubscribeToChanged(global::System.EventHandler<global::H.Generators.IntegrationTests.MyClass.ChangedEventArgs> handler)
+        {
+            Changed += handler;
+
+            return new global::EventGenerator.Disposable(() => Changed -= handler);
+        }
+
+        /// <summary>
         /// A helper method to raise the Changed event.
         /// </summary>
         protected virtual global::H.Generators.IntegrationTests.MyClass.ChangedEventArgs OnChanged(global::H.Generators.IntegrationTests.MyClass.ChangedEventArgs args)

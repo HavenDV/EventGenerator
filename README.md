@@ -1,5 +1,5 @@
 # EventGenerator
-Generated events and OnEvent() methods. Can generate complex EventArgs from multi-type attributes.
+Generates events, `OnEvent()` and `IDisposable SubscribeToEventName(handler)` methods. Can generate complex EventArgs from multi-type attributes.
 
 ## Install
 ```
@@ -117,7 +117,7 @@ if the type of the Cancel property is bool, which allows you to tell the calling
 ## Notes
 To use generic attributes, you need to set up `LangVersion` in your .csproj:
 ```xml
-<LangVersion>preview</LangVersion>
+<LangVersion>latest</LangVersion>
 ```
 There are also non-Generic attributes here.
 

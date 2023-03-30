@@ -21,6 +21,16 @@ namespace {@class.Namespace}
         public{(@event.IsStatic ? " static" : "")} event {GenerateEventHandlerType(@class, @event)}? {@event.Name};
 
         /// <summary>
+        /// A helper method to subscribe the {@event.Name} event.
+        /// </summary>
+        public{(@event.IsStatic ? " static" : "")} {GenerateSystemType("IDisposable")} SubscribeTo{@event.Name}({GenerateEventHandlerType(@class, @event)} handler)
+        {{
+            {@event.Name} += handler;
+
+            return new global::EventGenerator.Disposable(() => {@event.Name} -= handler);
+        }}
+
+        /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
         {GenerateOnEventModifier(@class, @event)} {GenerateEventArgsType(@class, @event)} On{@event.Name}({GenerateOnEventParameters(@class, @event)})
