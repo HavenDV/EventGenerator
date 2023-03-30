@@ -32,6 +32,16 @@ namespace H.Generators.IntegrationTests
         public event global::System.EventHandler<global::H.Generators.IntegrationTests.MyClass.DataChangedEventArgs>? DataChanged;
 
         /// <summary>
+        /// A helper method to subscribe to the DataChanged event.
+        /// </summary>
+        public global::System.IDisposable SubscribeToDataChanged(global::System.EventHandler<global::H.Generators.IntegrationTests.MyClass.DataChangedEventArgs> handler)
+        {
+            DataChanged += handler;
+
+            return new global::EventGenerator.Disposable(() => DataChanged -= handler);
+        }
+
+        /// <summary>
         /// A helper method to raise the DataChanged event.
         /// </summary>
         protected virtual global::H.Generators.IntegrationTests.MyClass.DataChangedEventArgs OnDataChanged(global::H.Generators.IntegrationTests.MyClass.DataChangedEventArgs args)
