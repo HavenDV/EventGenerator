@@ -22,9 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\ISSUE_TEMPLATE\bug-report.yaml = .github\ISSUE_TEMPLATE\bug-report.yaml
 		src\Directory.Build.props = src\Directory.Build.props
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
-		.github\FUNDING.yml = .github\FUNDING.yml
 		LICENSE = LICENSE
 		README.md = README.md
+		.github\dependabot.yml = .github\dependabot.yml
+		.github\workflows\pull-request.yml = .github\workflows\pull-request.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventGenerator.Attributes", "src\libs\EventGenerator.Attributes\EventGenerator.Attributes.csproj", "{689C238F-C57B-4790-BA6B-662C798A237C}"
