@@ -114,10 +114,10 @@ namespace EventGenerator
     }
 
     private static (ClassData Class, EventData EventData)? PrepareData(
-        (SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol ClassSymbol) tuple)
+        (SemanticModel SemanticModel, AttributeData AttributeData, TypeDeclarationSyntax ClassSyntax, INamedTypeSymbol ClassSymbol) tuple)
     {
-        var (_, attribute, _, classSymbol) = tuple;
-        
+        var (_, attribute, syntax, classSymbol) = tuple;
+
         var fullClassName = classSymbol.ToString();
         var @namespace = fullClassName.Substring(0, fullClassName.LastIndexOf('.'));
         var className = fullClassName.Substring(fullClassName.LastIndexOf('.') + 1);
@@ -129,6 +129,8 @@ namespace EventGenerator
         var name =
             attribute.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString() ??
             string.Empty;
+        
+        var implementsInterface = classSymbol.Interfaces.ElementAtOrDefault(0)?.GetMembers();
         var propertyNamesConstant = attribute.GetNamedArgument(nameof(EventAttribute.PropertyNames));
         var propertyNames =
             propertyNamesConstant is { IsNull: false }
@@ -186,6 +188,13 @@ namespace EventGenerator
         var classData = new ClassData(
             Namespace: @namespace,
             Name: className,
+            Type: syntax switch
+            {
+                ClassDeclarationSyntax => "class",
+                RecordDeclarationSyntax => "record",
+                InterfaceDeclarationSyntax => "interface",
+                _ => throw new NotSupportedException($"Type {syntax.GetType()} is not supported.")
+            },
             Modifiers: classModifiers,
             IsSealed: isSealed);
         

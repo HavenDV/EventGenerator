@@ -9,17 +9,9 @@ internal static class SourceGenerationHelper
         var sender = @event.IsStatic
             ? "sender"
             : "this";
-        
-        return @$" 
-#nullable enable
-
-namespace {@class.Namespace}
-{{
-    {@class.Modifiers} partial class {@class.Name}
-    {{
-{GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
-        public{(@event.IsStatic ? " static" : "")} event {GenerateEventHandlerType(@class, @event)}? {@event.Name};
-
+        var body = @class.Type == "interface"
+            ? string.Empty
+            : @$"
         /// <summary>
         /// A helper method to subscribe the {@event.Name} event.
         /// </summary>
@@ -51,7 +43,18 @@ namespace {@class.Namespace}
             {@event.Name}?.Invoke({sender}, args);
 
             return args;
-        }}")}
+        }}")}";
+        
+        return @$" 
+#nullable enable
+
+namespace {@class.Namespace}
+{{
+    {@class.Modifiers} partial {@class.Type} {@class.Name}
+    {{
+{GenerateXmlDocumentationFrom(@event.XmlDocumentation, @event)}
+        public{(@event.IsStatic ? " static" : "")} event {GenerateEventHandlerType(@class, @event)}? {@event.Name};
+{body}
     }}
 }}".RemoveBlankLinesWhereOnlyWhitespaces();
     }
@@ -63,7 +66,7 @@ namespace {@class.Namespace}
 
 namespace {@class.Namespace}
 {{
-    {@class.Modifiers} partial class {@class.Name}
+    {@class.Modifiers} partial {@class.Type} {@class.Name}
     {{
         /// <summary>
         /// 

@@ -90,4 +90,19 @@ public static partial class MyClass
 {
 }");
     }
+    
+    [TestMethod]
+    public Task Interface()
+    {
+        return CheckSourceAsync(@"
+[Event<int>(""Changed"")]
+public partial interface IMyClass
+{
+}
+
+[Event<int>(""Changed"")]
+public partial class MyClass : IMyClass
+{
+}");
+    }
 }

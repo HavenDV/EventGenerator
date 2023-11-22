@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace H.Generators;
@@ -15,11 +14,14 @@ public static class CommonSteps
             .ForAttributeWithMetadataName(
                 fullyQualifiedMetadataName: fullyQualifiedMetadataName,
                 predicate: static (node, _) =>
-                    node is ClassDeclarationSyntax { AttributeLists.Count: > 0 } or RecordDeclarationSyntax { AttributeLists.Count: > 0 },
+                    node is
+                        ClassDeclarationSyntax { AttributeLists.Count: > 0 } or 
+                        RecordDeclarationSyntax { AttributeLists.Count: > 0 } or
+                        InterfaceDeclarationSyntax { AttributeLists.Count: > 0 },
                 transform: static (context, _) => context);
     }
 
-    public static IncrementalValuesProvider<(SemanticModel SemanticModel, AttributeData AttributeData, ClassDeclarationSyntax ClassSyntax, INamedTypeSymbol ClassSymbol)>
+    public static IncrementalValuesProvider<(SemanticModel SemanticModel, AttributeData AttributeData, TypeDeclarationSyntax TypeDeclarationSyntax, INamedTypeSymbol ClassSymbol)>
         SelectManyAllAttributesOfCurrentClassSyntax(
         this IncrementalValuesProvider<GeneratorAttributeSyntaxContext> source)
     {
@@ -27,7 +29,7 @@ public static class CommonSteps
             .SelectMany(static (context, _) => context.Attributes
                 .Where(x =>
                 {
-                    var classSyntax = (ClassDeclarationSyntax)context.TargetNode;
+                    var classSyntax = (TypeDeclarationSyntax)context.TargetNode;
                     var attributeSyntax = classSyntax.TryFindAttributeSyntax(x);
                     
                     return attributeSyntax != null;
@@ -35,15 +37,15 @@ public static class CommonSteps
                 .Select(x => (
                     context.SemanticModel,
                     AttributeData: x,
-                    ClassSyntax: (ClassDeclarationSyntax)context.TargetNode,
+                    ClassSyntax: (TypeDeclarationSyntax)context.TargetNode,
                     ClassSymbol: (INamedTypeSymbol)context.TargetSymbol)));
     }
 
-    internal static AttributeSyntax? TryFindAttributeSyntax(this ClassDeclarationSyntax classSyntax, AttributeData attribute)
+    internal static AttributeSyntax? TryFindAttributeSyntax(this TypeDeclarationSyntax typeDeclarationSyntax, AttributeData attribute)
     {
         var name = attribute.ConstructorArguments.ElementAtOrDefault(0).Value?.ToString();
         
-        return classSyntax.AttributeLists
+        return typeDeclarationSyntax.AttributeLists
             .SelectMany(static x => x.Attributes)
             .FirstOrDefault(x => x.ArgumentList?.Arguments.FirstOrDefault()?.ToString().Trim('"').RemoveNameof() == name);
     }

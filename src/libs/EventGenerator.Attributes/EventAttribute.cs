@@ -12,7 +12,10 @@ namespace EventGenerator;
 /// <summary>
 /// Generates an event.
 /// </summary>
-[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.AttributeUsage(
+    global::System.AttributeTargets.Class |
+    global::System.AttributeTargets.Interface,
+    AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
 public class EventAttribute : global::System.Attribute
 {
@@ -73,7 +76,10 @@ public class EventAttribute : global::System.Attribute
 /// Generates an event.
 /// </summary>
 /// <typeparam name="T">Type of event handler.</typeparam>
-[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.AttributeUsage(
+    global::System.AttributeTargets.Class |
+    global::System.AttributeTargets.Interface,
+    AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
 public sealed class EventAttribute<T> : EventAttribute
 {
@@ -93,7 +99,10 @@ public sealed class EventAttribute<T> : EventAttribute
 /// </summary>
 /// <typeparam name="T1">Type of event handler.</typeparam>
 /// <typeparam name="T2">Type of event handler.</typeparam>
-[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.AttributeUsage(
+    global::System.AttributeTargets.Class |
+    global::System.AttributeTargets.Interface,
+    AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
 public sealed class EventAttribute<T1, T2> : EventAttribute
 {
@@ -114,7 +123,10 @@ public sealed class EventAttribute<T1, T2> : EventAttribute
 /// <typeparam name="T1">Type of event handler.</typeparam>
 /// <typeparam name="T2">Type of event handler.</typeparam>
 /// <typeparam name="T3">Type of event handler.</typeparam>
-[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.AttributeUsage(
+    global::System.AttributeTargets.Class |
+    global::System.AttributeTargets.Interface,
+    AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
 public sealed class EventAttribute<T1, T2, T3> : EventAttribute
 {
@@ -136,7 +148,10 @@ public sealed class EventAttribute<T1, T2, T3> : EventAttribute
 /// <typeparam name="T2">Type of event handler.</typeparam>
 /// <typeparam name="T3">Type of event handler.</typeparam>
 /// <typeparam name="T4">Type of event handler.</typeparam>
-[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.AttributeUsage(
+    global::System.AttributeTargets.Class |
+    global::System.AttributeTargets.Interface,
+    AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
 public sealed class EventAttribute<T1, T2, T3, T4> : EventAttribute
 {
@@ -159,7 +174,10 @@ public sealed class EventAttribute<T1, T2, T3, T4> : EventAttribute
 /// <typeparam name="T3">Type of event handler.</typeparam>
 /// <typeparam name="T4">Type of event handler.</typeparam>
 /// <typeparam name="T5">Type of event handler.</typeparam>
-[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.AttributeUsage(
+    global::System.AttributeTargets.Class |
+    global::System.AttributeTargets.Interface,
+    AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
 public sealed class EventAttribute<T1, T2, T3, T4, T5> : EventAttribute
 {
@@ -183,7 +201,10 @@ public sealed class EventAttribute<T1, T2, T3, T4, T5> : EventAttribute
 /// <typeparam name="T4">Type of event handler.</typeparam>
 /// <typeparam name="T5">Type of event handler.</typeparam>
 /// <typeparam name="T6">Type of event handler.</typeparam>
-[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.AttributeUsage(
+    global::System.AttributeTargets.Class |
+    global::System.AttributeTargets.Interface,
+    AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
 public sealed class EventAttribute<T1, T2, T3, T4, T5, T6> : EventAttribute
 {
@@ -208,7 +229,10 @@ public sealed class EventAttribute<T1, T2, T3, T4, T5, T6> : EventAttribute
 /// <typeparam name="T5">Type of event handler.</typeparam>
 /// <typeparam name="T6">Type of event handler.</typeparam>
 /// <typeparam name="T7">Type of event handler.</typeparam>
-[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.AttributeUsage(
+    global::System.AttributeTargets.Class |
+    global::System.AttributeTargets.Interface,
+    AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
 public sealed class EventAttribute<T1, T2, T3, T4, T5, T6, T7> : EventAttribute
 {
@@ -234,7 +258,10 @@ public sealed class EventAttribute<T1, T2, T3, T4, T5, T6, T7> : EventAttribute
 /// <typeparam name="T6">Type of event handler.</typeparam>
 /// <typeparam name="T7">Type of event handler.</typeparam>
 /// <typeparam name="T8">Type of event handler.</typeparam>
-[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.AttributeUsage(
+    global::System.AttributeTargets.Class |
+    global::System.AttributeTargets.Interface,
+    AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
 public sealed class EventAttribute<T1, T2, T3, T4, T5, T6, T7, T8> : EventAttribute
 {
@@ -261,7 +288,10 @@ public sealed class EventAttribute<T1, T2, T3, T4, T5, T6, T7, T8> : EventAttrib
 /// <typeparam name="T7">Type of event handler.</typeparam>
 /// <typeparam name="T8">Type of event handler.</typeparam>
 /// <typeparam name="T9">Type of event handler.</typeparam>
-[global::System.AttributeUsage(global::System.AttributeTargets.Class, AllowMultiple = true)]
+[global::System.AttributeUsage(
+    global::System.AttributeTargets.Class |
+    global::System.AttributeTargets.Interface,
+    AllowMultiple = true)]
 [global::System.Diagnostics.Conditional("EVENTGENERATOR_ATTRIBUTES")]
 public sealed class EventAttribute<T1, T2, T3, T4, T5, T6, T7, T8, T9> : EventAttribute
 {
