@@ -40,7 +40,7 @@ namespace {@class.Namespace}
 
             return args;
         }}
-{(!@event.Types.Any() || @event.IsEventArgs ? " " : $@"
+{(@event.Types.Length == 0 || @event.IsEventArgs ? " " : $@"
         /// <summary>
         /// A helper method to raise the {@event.Name} event.
         /// </summary>
@@ -112,7 +112,7 @@ namespace {@class.Namespace}
     
     private static string GenerateArgs(ClassData @class, EventData @event)
     {
-        if (@event.Types.Any())
+        if (@event.Types.Length != 0)
         {
             return string.Empty;
         }
@@ -146,7 +146,7 @@ namespace {@class.Namespace}
         {
             args.Add("object? sender");
         }
-        if (@event.Types.Any())
+        if (@event.Types.Length != 0)
         {
             args.Add($"{GenerateEventArgsType(@class, @event)} args");
         }
@@ -193,7 +193,7 @@ namespace {@class.Namespace}
     
     private static string GenerateEventArgsType(ClassData @class, EventData @event)
     {
-        if (@event.Types.Any() &&
+        if (@event.Types.Length != 0 &&
             !@event.IsEventArgs)
         {
             return $"{GenerateType($"{@class.Namespace}.{@class.Name}.{@event.Name}EventArgs", false)}";
@@ -214,7 +214,7 @@ namespace {@class.Namespace}
 
     private static string GenerateEventHandlerType(ClassData @class, EventData @event)
     {
-        if (@event.Types.Any())
+        if (@event.Types.Length != 0)
         {
             return $"{GenerateSystemType("EventHandler")}<{GenerateEventArgsType(@class, @event)}>";
         }
@@ -224,7 +224,7 @@ namespace {@class.Namespace}
 
     private static string GenerateXmlDocumentationFrom(string value)
     {
-        var lines = value.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        var lines = value.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries);
 
         return string.Join(Environment.NewLine, lines.Select(static line => $"        /// {line}"));
     }

@@ -163,7 +163,7 @@ namespace EventGenerator
                 })
                 .ToArray();
         }
-        if (propertyNames.Any())
+        if (propertyNames.Length != 0)
         {
             types = types.Zip(propertyNames, static (value, propertyName) => value with
                 {
@@ -203,7 +203,7 @@ namespace EventGenerator
                 Name: $"{className}.Events.{data.Event.Name}.generated.cs",
                 Text: SourceGenerationHelper.GenerateEvent(data.Class, data.Event))
         };
-        if (data.Event.Types.Any() &&
+        if (data.Event.Types.Length != 0 &&
             !data.Event.IsEventArgs)
         {
             files.Add(new FileWithName(
