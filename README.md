@@ -1,4 +1,8 @@
 # EventGenerator
+
+> [!IMPORTANT]
+> EventGenerator is deprecated and no longer maintained. Existing NuGet packages remain available for existing consumers, but no new releases, fixes, or security updates are planned. New code should use ordinary C# events or a project-local implementation tailored to its API.
+
 Generates events, `OnEvent()` and `IDisposable SubscribeToEventName(handler)` methods. Can generate complex EventArgs from multi-type attributes.
 
 ## Install
